@@ -17,10 +17,12 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import com.hazelcast.core.HazelcastInstance;
 import com.hazelcast.map.IMap;
-import com.hazelcast.spring.test.spring.cached.microservice.interceptor.MessageInterceptor;
+
+import lombok.extern.slf4j.Slf4j;
 
 @RestController
 @RequestMapping("/messageDump")
+@Slf4j
 class MessageController {
 
   @Autowired
@@ -31,17 +33,18 @@ class MessageController {
   public String addMessageToCache(@RequestParam("key")String key, @RequestParam("value")String value ){
     //some db operations
     retrieveCache().put(key, value);
+    log.info("log - added " + key +" message key to cache");
     return "added " + key +" message key to cache";
   }
 
     @GetMapping("{id}")
     public String getById(@PathVariable("id") String key) {
+      log.info("log - Message for Key : " + key + " requested." );
       return "Message for Key : " + key + " And Message: " + retrieveCache().get(key);
     }
   
     private IMap<Object, Object> retrieveCache(){
       var cache =  hazelcastInstance.getMap("cachedMessages");
-      cache.addInterceptor(new MessageInterceptor());
       return cache;
     }
 }

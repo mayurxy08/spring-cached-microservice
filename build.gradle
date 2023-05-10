@@ -6,7 +6,7 @@ plugins {
 }
 
 group = 'com.hazelcast.spring.test'
-version = '0.0.1-SNAPSHOT'
+version = '0.1.1'
 sourceCompatibility = '17'
 
 configurations {
@@ -24,6 +24,7 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-cache'
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 	implementation 'com.hazelcast:hazelcast-all:4.2.7'
+	implementation 'io.micrometer:micrometer-registry-prometheus:1.10.6'
 	compileOnly 'org.projectlombok:lombok'
 	annotationProcessor 'org.projectlombok:lombok'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
